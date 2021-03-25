@@ -29,11 +29,11 @@ def readPFM(file):
         raise Exception('Malformed PFM header.')
 
     scale = float(file.readline().rstrip().decode(encode_type['encoding']))
-    if scale < 0: # little-endian
+    if scale < 0:  # little-endian
         endian = '<'
         scale = -scale
     else:
-        endian = '>' # big-endian
+        endian = '>'  # big-endian
 
     data = np.fromfile(file, endian + 'f')
     shape = (height, width, 3) if color else (height, width)

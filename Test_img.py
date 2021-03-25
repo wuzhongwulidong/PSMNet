@@ -122,6 +122,7 @@ def main():
         img = Image.fromarray(img)
         img.save('Test_disparity.png')
 
+
 if __name__ == '__main__':
    main()
 

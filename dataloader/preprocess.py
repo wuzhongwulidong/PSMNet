@@ -20,7 +20,7 @@ __imagenet_pca = {
 
 def scale_crop(input_size, scale_size=None, normalize=__imagenet_stats):
     t_list = [
-        transforms.ToTensor(),
+        transforms.ToTensor(),  # torchvision.transforms.ToTensor()包含了通道转换（[H,W,C]->[C,H,W]）和像素值缩放 [0, 255]->[0.0, 1.0]
         transforms.Normalize(**normalize),
     ]
     #if scale_size != input_size:
@@ -32,7 +32,7 @@ def scale_crop(input_size, scale_size=None, normalize=__imagenet_stats):
 def scale_random_crop(input_size, scale_size=None, normalize=__imagenet_stats):
     t_list = [
         transforms.RandomCrop(input_size),
-        transforms.ToTensor(),
+        transforms.ToTensor(),  # torchvision.transforms.ToTensor()包含了通道转换（[H,W,C]->[C,H,W]）和归一化 [0, 255]->[0.0, 1.0]
         transforms.Normalize(**normalize),
     ]
     if scale_size != input_size:
@@ -82,8 +82,6 @@ def get_transform(name='imagenet', input_size=None,
     else:
             return scale_crop(input_size=input_size,
                               scale_size=scale_size, normalize=normalize)
-
-
 
 
 class Lighting(object):

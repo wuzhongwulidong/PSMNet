@@ -1,3 +1,3 @@
-from .basic import PSMNet as basic
-from .stackhourglass import PSMNet as stackhourglass
+from .basic import PSMNet as PSMNet_basic
+from .stackhourglass import PSMNet as PSMNet_stackhourglass
 

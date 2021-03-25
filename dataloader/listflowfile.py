@@ -13,15 +13,14 @@ IMG_EXTENSIONS = [
 def is_image_file(filename):
     return any(filename.endswith(extension) for extension in IMG_EXTENSIONS)
 
-def dataloader(filepath):
 
-    classes = [d for d in os.listdir(filepath) if os.path.isdir(os.path.join(filepath, d))]
-    image = [img for img in classes if img.find('frames_cleanpass') > -1]
-    disp  = [dsp for dsp in classes if dsp.find('disparity') > -1]
+def dataloader(filepath):
+    classes = [d for d in os.listdir(filepath) if os.path.isdir(os.path.join(filepath, d))]  # 获得filepath下的所有目录名，构成list
+    image = [img for img in classes if img.find('frames_cleanpass') > -1]  # 找到所有包含‘frames_cleanpass’的目录名，构成list
+    disp  = [dsp for dsp in classes if dsp.find('disparity') > -1]  # 找到所有包含‘disparity’的目录名，构成list
 
     monkaa_path = filepath + [x for x in image if 'monkaa' in x][0]
     monkaa_disp = filepath + [x for x in disp if 'monkaa' in x][0]
-
 
     monkaa_dir  = os.listdir(monkaa_path)
 
@@ -31,7 +30,6 @@ def dataloader(filepath):
     test_left_img=[]
     test_right_img=[]
     test_left_disp = []
-
 
     for dd in monkaa_dir:
       for im in os.listdir(monkaa_path+'/'+dd+'/left/'):
@@ -80,8 +78,6 @@ def dataloader(filepath):
           if is_image_file(flying_dir+ss+'/'+ff+'/right/'+im):
             test_right_img.append(flying_dir+ss+'/'+ff+'/right/'+im)
 
-
-
     driving_dir = filepath + [x for x in image if 'driving' in x][0] + '/'
     driving_disp = filepath + [x for x in disp if 'driving' in x][0]
 
@@ -101,7 +97,6 @@ def dataloader(filepath):
 
               if is_image_file(driving_dir+i+'/'+j+'/'+k+'/right/'+im):
                 all_right_img.append(driving_dir+i+'/'+j+'/'+k+'/right/'+im)
-
 
     return all_left_img, all_right_img, all_left_disp, test_left_img, test_right_img, test_left_disp
 

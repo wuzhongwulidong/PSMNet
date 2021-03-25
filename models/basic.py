@@ -67,11 +67,11 @@ class PSMNet(nn.Module):
 
         for i in range(self.maxdisp/4):
             if i > 0 :
-             cost[:, :refimg_fea.size()[1], i, :,i:]   = refimg_fea[:,:,:,i:]
-             cost[:, refimg_fea.size()[1]:, i, :,i:] = targetimg_fea[:,:,:,:-i]
+                cost[:, :refimg_fea.size()[1], i, :, i:] = refimg_fea[:, :, :, i:]
+                cost[:, refimg_fea.size()[1]:, i, :, i:] = targetimg_fea[:, :, :, :-i]
             else:
-             cost[:, :refimg_fea.size()[1], i, :,:]   = refimg_fea
-             cost[:, refimg_fea.size()[1]:, i, :,:]   = targetimg_fea
+                cost[:, :refimg_fea.size()[1], i, :, :] = refimg_fea
+                cost[:, refimg_fea.size()[1]:, i, :, :] = targetimg_fea
         cost = cost.contiguous()
 
         cost0 = self.dres0(cost)
@@ -81,7 +81,7 @@ class PSMNet(nn.Module):
         cost0 = self.dres4(cost0) + cost0
 
         cost = self.classify(cost0)
-        cost = F.upsample(cost, [self.maxdisp,left.size()[2],left.size()[3]], mode='trilinear')
+        cost = F.interpolate(cost, [self.maxdisp,left.size()[2],left.size()[3]], mode='trilinear', align_corners=True)
         cost = torch.squeeze(cost,1)
         pred = F.softmax(cost)
         pred = disparityregression(self.maxdisp)(pred)
