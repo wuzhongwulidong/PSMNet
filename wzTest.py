@@ -69,6 +69,7 @@ parser.add_argument('--strict', action='store_true', help='Strict mode when load
 
 args = parser.parse_args()
 logger = utils.get_logger(os.path.join(args.checkpoint_dir, "testLog.txt"))
+logger.info('[Info] used parameters: {}'.format(vars(args)))
 
 
 # torch.manual_seed(args.seed) #为CPU设置种子用于生成随机数，以使得结果是确定的
