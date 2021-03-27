@@ -44,7 +44,7 @@ parser.add_argument('--checkpoint_dir', default="./checkpoint/", type=str, help=
 
 parser.add_argument('--max_disp', default=192, type=int, help='Max disparity')
 parser.add_argument('--test_batch_size', default=1, type=int, help='Batch size for test')
-parser.add_argument('--test_img_height', default=576, type=int, help='Image height for test')
+parser.add_argument('--test_img_height', default=544, type=int, help='Image height for test')
 parser.add_argument('--test_img_width', default=960, type=int, help='Image width for test')
 
 parser.add_argument('--num_workers', default=4, type=int, help='Number of workers for data loading')
